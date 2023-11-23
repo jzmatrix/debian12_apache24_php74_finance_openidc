@@ -1,0 +1,31 @@
+version: 2.1
+
+workflows:
+  build:
+    jobs:
+      - build:
+          context:
+            - DockerLogin
+
+jobs:
+  build:
+    working_directory: /app
+    docker:
+      - image: docker:24.0.7-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Authenticate with Docker
+          command: |
+            docker login --username ${DOCKER_USERNAME} -p "${DOCKER_PASSWORD}"
+      - run:
+          name: Build application Docker image
+          command: |
+            TS=`date +%Y%m%d_%H%M`
+            echo $TS
+            ##
+            docker build --cache-from=app  -t ${IMAGE_REPO}/${CIRCLE_PROJECT_REPONAME}:$TS -t ${IMAGE_REPO}/${CIRCLE_PROJECT_REPONAME}:latest .
+            ##
+            docker push ${IMAGE_REPO}/${CIRCLE_PROJECT_REPONAME}:$TS
+            docker push ${IMAGE_REPO}/${CIRCLE_PROJECT_REPONAME}:latest
