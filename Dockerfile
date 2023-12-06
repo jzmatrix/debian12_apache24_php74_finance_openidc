@@ -1,13 +1,15 @@
 FROM jzmatrix/debian12_base_image:latest
 ################################################################################
+#  php7.4-cgi
+################################################################################
 RUN apt update && \
     apt -y upgrade && \
     apt -y install passwd lsb-release apt-transport-https ca-certificates wget curl && \
     wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg  && \
     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list && \
     apt update && \
-    apt -y install php7.4 apache2 php-pear pkg-config libmongoc-1.0-0 php-xml php7.0-xml php-dev php7.4-xml && \
-    apt -y install php7.4-bcmath php7.4-bz2 php7.4-cgi php7.4-common php7.4-curl php7.4-gd php7.4-geoip php7.4-gmp php7.4-imagick php7.4-intl php7.4-json php7.4-mbstring php7.4-mcrypt php7.4-memcache php7.4-memcached php7.4-mongodb php7.4-mysql php7.4-opcache php7.4-pspell php7.4-readline php7.4-snmp php7.4-tidy php7.4-xmlrpc php7.4-xsl php7.4-zip php-pear && \
+    apt -y install php7.4-fpm apache2 php-pear pkg-config libmongoc-1.0-0 php-xml php7.0-xml php-dev php7.4-xml && \
+    apt -y install php7.4-bcmath php7.4-bz2 php7.4-common php7.4-curl php7.4-gd php7.4-geoip php7.4-gmp php7.4-imagick php7.4-intl php7.4-json php7.4-mbstring php7.4-mcrypt php7.4-memcache php7.4-memcached php7.4-mongodb php7.4-mysql php7.4-opcache php7.4-pspell php7.4-readline php7.4-snmp php7.4-tidy php7.4-xmlrpc php7.4-xsl php7.4-zip php-pear && \
     /usr/bin/pear channel-update pear.php.net && \
     /usr/bin/pear install Math_Finance
 
@@ -33,7 +35,7 @@ RUN chmod 644 /etc/php/7.4/apache2/php.ini && \
     chmod 644 /etc/apache2/sites-available/000-default.conf && \
     chmod 644 /etc/apache2/mods-available/info.conf && \
     chmod 644 /etc/apache2/mods-available/status.conf && \
-    ln -f -s /etc/apache2/conf-available/php7.4-cgi.conf /etc/apache2/conf-enabled/ && \
+    ln -f -s /etc/apache2/conf-available/php7.4-fpm.conf /etc/apache2/conf-enabled/ && \
     a2enmod info && \
     a2enmod rewrite && \
     a2enmod remoteip && \
