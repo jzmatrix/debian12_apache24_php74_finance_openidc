@@ -20,7 +20,7 @@ if ! ( "$oidcDisable" == "true" );
     export OIDC_CLIENT_ID="$oidcClientID"
     export OIDC_CLIENT_SECRET="$oidcClientSecret"
     export OIDC_SCOPE="openid name email profile"
-    export OIDC_REDIRECT_URL="http://$siteURL/user_auth/"
+    export OIDC_REDIRECT_URL="https://$siteURL/user_auth/"
     export OIDC_RESPONSE_TYPE="code"
     export OIDC_PASS_CLAILS_AS="environment"
     export OIDC_CLAIM_PREFIX="USERINFO_"
@@ -31,7 +31,7 @@ else
     a2dismod auth_openidc
 fi
 
-/usr/sbin/php-fpm7.4
+# /usr/sbin/php-fpm7.4
 /usr/sbin/apachectl -D FOREGROUND
 
 # /run-httpd.sh
