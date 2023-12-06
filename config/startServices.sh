@@ -31,4 +31,7 @@ else
     a2dismod auth_openidc
 fi
 
-/run-httpd.sh
+/usr/sbin/php-fpm7.4
+/usr/sbin/apachectl -D FOREGROUND
+
+# /run-httpd.sh
