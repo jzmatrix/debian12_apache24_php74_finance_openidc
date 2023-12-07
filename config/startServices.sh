@@ -30,5 +30,15 @@ if ! ( "$oidcDisable" == "true" );
 else
     a2dismod auth_openidc
 fi
-
-/run-httpd.sh
+#####################
+if ( "$memcache_store" );
+  then 
+    echo "session.save_handler = memcached" >> /etc/php/7.4/apache2/php.ini
+    echo "session.save_path = '$memcache_store'" >> /etc/php/7.4/apache2/php.ini
+else
+  echo "session.save_handler = files" >> /etc/php/7.4/apache2/php.ini
+fi
+#####################
+rm -rf /run/httpd/*
+#####################
+/usr/sbin/apachectl -D FOREGROUND
