@@ -1,8 +1,5 @@
 FROM jzmatrix/debian12_base_image:latest
 ################################################################################
-#  php7.4-cgi
-# php-dev 
-################################################################################
 RUN apt update && \
     apt -y upgrade && \
     apt -y install passwd lsb-release apt-transport-https ca-certificates wget curl && \
@@ -20,7 +17,7 @@ RUN apt update && \
                     php7.4-cgi \
                     php7.4-common \
                     php7.4-curl \
-                    # php7.4-fpm \
+                    php-dev \
                     php7.4-gd \
                     php7.4-geoip \
                     php7.4-gmp \
@@ -54,7 +51,6 @@ RUN dpkg -i /tmp/libapache2-mod-auth-openidc_2.4.11.2-1.buster+1_amd64.deb ; ech
     apt-get -f -y install && \
     a2enmod auth_openidc
 ################################################################################
-# ADD config/php7/php.ini /etc/php/7.4/fpm/php.ini
 ADD config/php7/php.ini /etc/php/7.4/apache2/php.ini
 ADD config/apache2/apache2.conf /etc/apache2/apache2.conf
 ADD config/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf
@@ -63,7 +59,6 @@ ADD config/apache2/status.conf /etc/apache2/mods-available/status.conf
 ADD config/run-httpd.sh /run-httpd.sh
 ADD config/startServices.sh /opt/startServices.sh
 ################################################################################
-# chmod 644 /etc/php/7.4/fpm/php.ini && \
 RUN chmod 644 /etc/php/7.4/apache2/php.ini && \
     chmod 644 /etc/apache2/apache2.conf && \
     chmod 644 /etc/apache2/sites-available/000-default.conf && \
@@ -76,8 +71,6 @@ RUN chmod 644 /etc/php/7.4/apache2/php.ini && \
     a2enmod status && \
     a2enmod proxy_fcgi && \
     a2enmod setenvif && \
-    # a2enconf php7.4-fpm  && \
-    a2enconf php7.4-cgi  && \
     chmod -v +x /run-httpd.sh && \
     chmod 755 /opt/startServices.sh
 ################################################################################
