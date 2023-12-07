@@ -56,7 +56,6 @@ ADD config/apache2/apache2.conf /etc/apache2/apache2.conf
 ADD config/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf
 ADD config/apache2/info.conf /etc/apache2/mods-available/info.conf
 ADD config/apache2/status.conf /etc/apache2/mods-available/status.conf
-ADD config/run-httpd.sh /run-httpd.sh
 ADD config/startServices.sh /opt/startServices.sh
 ################################################################################
 RUN chmod 644 /etc/php/7.4/apache2/php.ini && \
@@ -69,9 +68,7 @@ RUN chmod 644 /etc/php/7.4/apache2/php.ini && \
     a2enmod rewrite && \
     a2enmod remoteip && \
     a2enmod status && \
-    a2enmod proxy_fcgi && \
     a2enmod setenvif && \
-    chmod -v +x /run-httpd.sh && \
     chmod 755 /opt/startServices.sh
 ################################################################################
 CMD [ "/opt/startServices.sh" ]
