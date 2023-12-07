@@ -64,7 +64,7 @@ RUN chmod 644 /etc/php/7.4/apache2/php.ini && \
     chmod 644 /etc/apache2/sites-available/000-default.conf && \
     chmod 644 /etc/apache2/mods-available/info.conf && \
     chmod 644 /etc/apache2/mods-available/status.conf && \
-    ln -f -s /etc/apache2/conf-available/php7.4-fpm.conf /etc/apache2/conf-enabled/ && \
+    ln -f -s /etc/apache2/conf-available/php7.4-cgi.conf /etc/apache2/conf-enabled/ && \
     a2enmod info && \
     a2enmod rewrite && \
     a2enmod remoteip && \
