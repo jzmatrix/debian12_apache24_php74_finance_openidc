@@ -31,12 +31,12 @@ else
     a2dismod auth_openidc
 fi
 #####################
-if ( "$memcache_store" );
+if [ -z "$memcacheStore" ];
   then 
-    echo "session.save_handler = memcached" >> /etc/php/7.4/apache2/php.ini
-    echo "session.save_path = '$memcache_store'" >> /etc/php/7.4/apache2/php.ini
+    echo "session.save_handler = files" >> /etc/php/7.4/apache2/php.ini
 else
-  echo "session.save_handler = files" >> /etc/php/7.4/apache2/php.ini
+    echo "session.save_handler = memcached" >> /etc/php/7.4/apache2/php.ini
+    echo "session.save_path = '$memcacheStore'" >> /etc/php/7.4/apache2/php.ini  
 fi
 #####################
 rm -rf /run/httpd/*
